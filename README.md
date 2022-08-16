@@ -1,0 +1,2 @@
+# projectMinTic
+final project minTic
