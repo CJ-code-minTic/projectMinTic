@@ -15,7 +15,6 @@ public class Profile {
     private long id;
     private String image;
     private String phone;
-    private Employee employee;
     private Date createAt;
     private Date updateAt;
 }
