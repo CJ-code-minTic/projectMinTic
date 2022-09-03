@@ -1,13 +1,11 @@
 package com.cjcode.projectMinTic.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 @Builder
@@ -36,8 +34,7 @@ public class Employee {
     private Enterprise enterprise;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonManagedReference
-    private List<Transaction> transactions;
+    private List<Transaction> transaction;
 
     @Column(name = "image")
     private String image;
