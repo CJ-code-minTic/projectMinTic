@@ -2,49 +2,38 @@ package com.cjcode.projectMinTic.Controllers;
 
 import com.cjcode.projectMinTic.Entities.Enterprise;
 import com.cjcode.projectMinTic.Services.EnterpriseService;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.PrimitiveIterator;
-
 @RestController
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@RequestMapping("/enterprises")
 public class EnterpriseController {
+    @Autowired
     private EnterpriseService service;
-    @GetMapping("/enterprises")
-    public List<Enterprise> getEnterprises(){
-        return this.service.getEnterpriseRepository().findAll();
+
+    @GetMapping
+    public ResponseEntity<?> getAllEnterprises(){
+        return service.getAllEnterprises();
     }
 
-    @PostMapping("/enterprises")
-    public Enterprise createEnterprise(@RequestBody Enterprise enterprise){
-        return this.service.getEnterpriseRepository().save(enterprise);
+    @PostMapping
+    public ResponseEntity<?> createEnterprise(@RequestBody Enterprise enterprise){
+        return service.createEnterprise(enterprise);
     }
 
-    @GetMapping("/enterprises/{id}")
-    public Enterprise getEnterprise(@PathVariable("id") Long id){
-        return this.service.getEnterpriseRepository().getReferenceById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEnterpriseById(@PathVariable("id") Long id){
+        return service.getEnterpriseById(id);
     }
 
-    @PutMapping("/enterprises/{id}")
-    public Enterprise updateEnterprise(@PathVariable("id") int id, @RequestBody Enterprise enterprise){
-        return this.service.getEnterpriseRepository().findAll().set(id, enterprise);
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateEnterprise(@PathVariable("id") Long id,@RequestBody Enterprise enterprise){
+        return service.updateEnterprise(id,enterprise);
     }
 
-    @DeleteMapping("/enterprises/{id}")
-    public boolean deleteEnterprise(@PathVariable("id") Long id){
-        try{
-            this.service.getEnterpriseRepository().deleteById(id);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEnterprise(@PathVariable("id") Long id){
+        return service.deleteEnterprise(id);
     }
 }

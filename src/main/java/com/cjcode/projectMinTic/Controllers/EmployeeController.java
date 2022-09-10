@@ -1,17 +1,10 @@
 package com.cjcode.projectMinTic.Controllers;
 
 import com.cjcode.projectMinTic.Entities.Employee;
-import com.cjcode.projectMinTic.Exception.ApiException;
-import com.cjcode.projectMinTic.Repositories.EmployeeRepository;
 import com.cjcode.projectMinTic.Services.EmployeeService;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -20,32 +13,27 @@ public class EmployeeController {
     private EmployeeService service;
 
     @GetMapping
-    public List<Employee> getEmployees(){
+    public ResponseEntity<?> getEmployees(){
         return service.getAllUsers();
     }
 
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) throws ApiException {
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         return service.createUser(employee);
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable("id") Long id){
-        return Employee.builder().build();
+    public ResponseEntity<?> getEmployee(@PathVariable("id") Long id){
+        return service.getUserById(id);
     }
 
-    @PutMapping("/{Id}")
-    public Employee updateEmployee(@PathVariable("id") int id, @RequestBody Employee employee){
-        return Employee.builder().build();
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee){
+        return service.updateUser(id,employee);
     }
 
-    @DeleteMapping("/{Id}")
-    public Boolean deleteEmployee(@PathVariable("id") Long id){
-        try{
-
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id){
+        return service.deleteUser(id);
     }
 }

@@ -1,17 +1,11 @@
 package com.cjcode.projectMinTic.Services;
 
-import com.cjcode.projectMinTic.Repositories.TransactionRepository;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.cjcode.projectMinTic.Entities.Transaction;
+import org.springframework.http.ResponseEntity;
 
-@Service
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class TransactionService {
-    private TransactionRepository transactionRepository;
+public interface TransactionService {
+    ResponseEntity<?> getAllTransactions(Long id);
+    ResponseEntity<?> createTransaction(Long id, Transaction transaction);
+    ResponseEntity<?> updateTransaction(Long enterpriseId, Long id, Transaction transaction);
+    ResponseEntity<?> deleteTransaction(Long enterpriseId, Long id, Transaction transaction);
 }

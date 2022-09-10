@@ -1,17 +1,12 @@
 package com.cjcode.projectMinTic.Services;
 
-import com.cjcode.projectMinTic.Repositories.EnterpriseRepository;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.cjcode.projectMinTic.Entities.Enterprise;
+import org.springframework.http.ResponseEntity;
 
-@Service
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class EnterpriseService {
-    private EnterpriseRepository enterpriseRepository;
+public interface EnterpriseService {
+    ResponseEntity<?> getAllEnterprises();
+    ResponseEntity<?> createEnterprise(Enterprise enterprise);
+    ResponseEntity<?> getEnterpriseById(Long id);
+    ResponseEntity<?> deleteEnterprise(Long id);
+    ResponseEntity<?> updateEnterprise(Long id,Enterprise enterprise);
 }

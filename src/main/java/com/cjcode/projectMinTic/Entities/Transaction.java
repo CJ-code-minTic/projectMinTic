@@ -1,19 +1,18 @@
 package com.cjcode.projectMinTic.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "transaction")
-public class Transaction{
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,10 +24,12 @@ public class Transaction{
     @Column(name = "amount")
     private float amount;
 
+    @JsonBackReference("employee")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @JsonBackReference("enterprise")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;

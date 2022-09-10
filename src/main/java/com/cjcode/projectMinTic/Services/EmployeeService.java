@@ -2,12 +2,12 @@ package com.cjcode.projectMinTic.Services;
 
 
 import com.cjcode.projectMinTic.Entities.Employee;
-import com.cjcode.projectMinTic.Exception.ApiException;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface EmployeeService {
-    List<Employee> getAllUsers();
-    Employee createUser(Employee employee) throws ApiException;
-
+    ResponseEntity<?> getAllUsers();
+    ResponseEntity<?> createUser(Employee employee);
+    ResponseEntity<?> getUserById(Long id);
+    ResponseEntity<?> deleteUser(Long id);
+    ResponseEntity<?> updateUser(Long id,Employee employee);
 }
