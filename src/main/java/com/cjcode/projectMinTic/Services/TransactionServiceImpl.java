@@ -60,7 +60,7 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public ResponseEntity<?> deleteTransaction(Long enterpriseId, Long id, Transaction transaction) {
+    public ResponseEntity<?> deleteTransaction(Long enterpriseId, Long id) {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(enterpriseId);
         if(enterprise.isEmpty()){
             return ResponseEntity.badRequest().body("Empresa no registrada");

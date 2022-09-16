@@ -32,8 +32,7 @@ public class TransactionController {
 
     @DeleteMapping("/{enterpriseId}/movements/{id}")
     public ResponseEntity<?> deleteTransaction(@PathVariable("enterpriseId") Long enterpriseId,
-                                               @PathVariable("id") Long id,
-                                               @RequestBody Transaction transaction){
-        return service.deleteTransaction(enterpriseId,id,transaction);
+                                               @PathVariable("id") Long id){
+        return service.deleteTransaction(enterpriseId,id);
     }
 }
