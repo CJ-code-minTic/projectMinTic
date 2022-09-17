@@ -18,11 +18,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .oauth2Login()
+        http.authorizeRequests()
+                // allow all users to access the home pages and the static images directory
+                .antMatchers("/sw.js").permitAll()
+                .mvcMatchers("/", "/images/**" ,"/css/**","/fonts/**").permitAll()
+                // all other requests must be authenticated
+                .anyRequest().authenticated()
+                .and().oauth2Login()
                 .and().logout()
+                // handle logout requests at /logout path
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .addLogoutHandler(logoutHandler)
-                .and().build();
+                // customize logout handler to log out of Auth0
+                .addLogoutHandler(logoutHandler);
+        return http.build();
     }
 }

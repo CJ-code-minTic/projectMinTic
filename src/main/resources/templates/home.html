@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -24,43 +24,12 @@
 <div class="d-flex" id="content-wrapper">
 
     <!-- Sidebar -->
-    <div id="sidebar-container" class="bg-primary">
-        <div class="logo">
-            <h4 class="text-light font-weight-bold mb-0">Libreria CJ Code</h4>
-            <img src="images/logo.png" width="200px" height="200px">
-        </div>
-        <div class="menu">
-            <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-cash lead mr-2"></i>
-                Ingresos y Egresos</a>
-
-            <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i>
-                Usuarios</a>
-
-            <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-business lead mr-2"></i>
-                Empresas</a>
-        </div>
-    </div>
+    <div th:insert="sidebar :: sidebar">  </div>
     <!-- Fin sidebar -->
 
     <div class="w-100">
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="container">
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-dark">
-                                <img src="images/default.png" class="img-fluid rounded-circle avatar mr-2"
-                                     alt="user.png" />
-                                Usuario
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div th:insert="navbar :: navbar">  </div>
         <div id="content">
 
             <section class="bg-light py-3">
