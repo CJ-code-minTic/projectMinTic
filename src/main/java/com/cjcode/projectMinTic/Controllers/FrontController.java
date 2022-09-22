@@ -1,5 +1,7 @@
 package com.cjcode.projectMinTic.Controllers;
 
+import com.cjcode.projectMinTic.Services.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class FrontController {
+    EmployeeService employeeService;
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal OidcUser principal) {
         if(principal != null){
