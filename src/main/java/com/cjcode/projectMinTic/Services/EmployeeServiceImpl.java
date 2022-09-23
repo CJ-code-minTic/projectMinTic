@@ -21,6 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private UtilsService utilsService;
 
+
+    @Override
+    public List<Employee> getAllUsersMVC() {
+        return employeeRepository.findAll();
+    }
+
     @Override
     public ResponseEntity<?> getAllUsers() {
         List<Employee> employees = employeeRepository.findAll();

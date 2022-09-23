@@ -23,6 +23,12 @@ public class EnterpriseServiceImpl implements EnterpriseService{
     private UtilsService utilsService;
 
     @Override
+    public List<Enterprise> getAllEnterpriseMVC() {
+
+        return repository.findAll();
+    }
+
+    @Override
     public ResponseEntity<?> getAllEnterprises() {
         List<Enterprise> enterpriseList = repository.findAll();
         if(enterpriseList.isEmpty()){
