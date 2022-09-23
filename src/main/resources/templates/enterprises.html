@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://https://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -40,9 +40,14 @@
                 </div>
             </section>
             <section>
+                <div class="container">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="p-2">
+                            <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/enterprise/form">Crear nueva empresa</a>
+                        </div>
+                    </div>
+                </div>
                 <br>
-                <br>
-                <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/enterprise/form">Crear nueva empresa</a>
                 <br>
             </section>
             <section>
@@ -50,31 +55,23 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Documento</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Direccion</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
+                        <tr th:each="enterprise : ${enterprises}">
+                            <td th:text="${enterprise.name}"></td>
+                            <td th:text="${enterprise.document}"></td>
+                            <td th:text="${enterprise.phone}"></td>
+                            <td th:text="${enterprise.address}"></td>
+                            <td>
+                                <a href="/enterprise/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
+                                <a href="/enterprise/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

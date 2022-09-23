@@ -70,7 +70,9 @@ public class FrontController {
     }
 
     @GetMapping("/enterprise")
-    public String enterprises(){
+    public String enterprises(Model model){
+        List<Enterprise> enterprises = enterpriseService.getAllEnterpriseMVC();
+        model.addAttribute("enterprises",enterprises);
         return "enterprises";
     }
 
