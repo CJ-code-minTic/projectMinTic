@@ -36,9 +36,8 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.name}">
                             <img src="images/default.png" class="img-fluid rounded-circle avatar mr-2"/>
-                            Usuario
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" th:href="@{/logout}">Salir</a>
