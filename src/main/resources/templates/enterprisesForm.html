@@ -18,7 +18,9 @@
     <!-- Ionic icons -->
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
-    <title>Empresas form</title>
+    <script type="text/javascript" src="/js/enterprise.js"></script>
+
+    <title>Empresas</title>
 </head>
 <body>
 <div class="d-flex" id="content-wrapper">
@@ -35,20 +37,50 @@
                             <br>
                             <br>
                             <h1 class="font-weight-bold mb-0">Crear nueva empresa</h1>
-                            <form><br>
-                                <div class="form-group col-lg-6" >
-                                    <input type="int" class="form-control" id="inputdId" placeholder="Id">
-                                    <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
-                                    <input type="text" class="form-control" id="inputDocumento" placeholder="Documento">
-                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Telefono">
-                                    <input type="text" class="form-control" id="inputDireccion" placeholder="Direccion">
-                                    <input type="text" class="form-control" id="inputUsuario" placeholder="Usuario">
-                                    <input type="text" class="form-control" id="inputTransaction" placeholder="Transaccion">
-                                    <button type="button" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <br>
+                    <br>
+                    <form>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="name" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="document" class="col-sm-2 col-form-label">Documento</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="document" placeholder="Documento">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-sm-2 col-form-label">Telefono</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="phone" placeholder="Telefono">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-2 col-form-label">Dirección</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="address" placeholder="Dirección">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mx-auto">
+                                <button type="submit" class="btn btn-primary">Registrar</button>
+                                <button type="button" class="btn btn-secondary" th:onclick="cleanForm()">Limpiar</button>
+                                <a href="/enterprise" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </section>
         </div>

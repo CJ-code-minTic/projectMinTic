@@ -21,7 +21,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 // allow all users to access the home pages and the static images directory
                 .antMatchers("/sw.js").permitAll()
-                .mvcMatchers("/", "/images/**" ,"/css/**","/fonts/**").permitAll()
+                .mvcMatchers("/", "/images/**" ,"/css/**","/fonts/**","/js/**").permitAll()
                 // all other requests must be authenticated
                 .anyRequest().authenticated()
                 .and().oauth2Login()
