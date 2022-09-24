@@ -25,6 +25,11 @@ public class TransactionServiceImpl implements TransactionService{
     private UtilsService utilsService;
 
     @Override
+    public List<Transaction> getAllTransactionsMVC() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
     public ResponseEntity<?> getAllTransactions(Long id) {
         List<Transaction> transactions = transactionRepository.findByEnterpriseId(id);
         if(transactions.isEmpty()){
