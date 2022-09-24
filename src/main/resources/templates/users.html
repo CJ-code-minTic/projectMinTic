@@ -59,9 +59,10 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
                             <th scope="col">Rol</th>
-
                             <th scope="col">Imagen</th>
                             <th scope="col">Telefono</th>
+                            <th scope="col">Empresa</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -72,6 +73,7 @@
                             <td th:text="${user.role}"></td>
                             <td th:text="${user.image}"></td>
                             <td th:text="${user.phone}"></td>
+                            <td th:text="${user.enterprise}"></td>
                             <td>
                                 <a href="/user/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
                                 <a href="/user/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>

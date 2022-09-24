@@ -20,16 +20,9 @@ public class EnterpriseController {
         return service.getAllEnterprises();
     }
 
-   /* @PostMapping
+    @PostMapping
     public ResponseEntity<?> createEnterprise(@RequestBody Enterprise enterprise){
         return service.createEnterprise(enterprise);
-    }*/
-
-    @PostMapping
-   public RedirectView createEnterprise(@ModelAttribute Enterprise enterprise, Model model) {
-        model.addAttribute(enterprise);
-        this.service.createEnterprise(enterprise);
-        return new RedirectView("/enterprise");
     }
 
     @GetMapping("/{id}")
