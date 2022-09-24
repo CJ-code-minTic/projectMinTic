@@ -29,6 +29,20 @@ public class EnterpriseServiceImpl implements EnterpriseService{
     }
 
     @Override
+    public Enterprise createEnterpriseMVC(Enterprise enterprise) {
+        Enterprise enterpriseDb = repository.findByName(enterprise.getName());
+        if(enterpriseDb == null){
+            var enterpriseDb2 = repository.findByDocument(enterprise.getDocument());
+            if(enterpriseDb2 == null){
+                enterprise.setCreateAt(new Date());
+                return repository.save(enterprise);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
     public ResponseEntity<?> getAllEnterprises() {
         List<Enterprise> enterpriseList = repository.findAll();
         if(enterpriseList.isEmpty()){

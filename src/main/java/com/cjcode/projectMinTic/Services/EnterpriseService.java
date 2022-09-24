@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface EnterpriseService {
     List<Enterprise> getAllEnterpriseMVC();
+    Enterprise createEnterpriseMVC(Enterprise enterprise);
     ResponseEntity<?> getAllEnterprises();
     ResponseEntity<?> createEnterprise(Enterprise enterprise);
     ResponseEntity<?> getEnterpriseById(Long id);

@@ -14,6 +14,11 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,11 +30,11 @@ public class FrontController {
 
     @Autowired
     private FrontService service;
+    @Autowired
+    private EnterpriseService enterpriseService;
+    @Autowired
+    private EmployeeService employeeService;
 
-    @Autowired
-    EnterpriseService enterpriseService;
-    @Autowired
-    EmployeeService employeeService;
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal OidcUser principal, HttpSession session) {
         if(principal != null){
@@ -76,8 +81,22 @@ public class FrontController {
         return "enterprises";
     }
 
+    @PostMapping("/enterprise")
+    public RedirectView createEnterprise(@ModelAttribute Enterprise enterprise, Model model,
+                                         RedirectAttributes attributes){
+        model.addAttribute(enterprise);
+        Enterprise enterpriseSave = enterpriseService.createEnterpriseMVC(enterprise);
+        if(enterpriseSave == null){
+            attributes.addFlashAttribute("error","Ya Existe una Empresa con los datos registrados");
+            return new RedirectView("/enterprise/form");
+        }
+        attributes.addFlashAttribute("success","Empresa creada correctamente");
+        return new RedirectView("/enterprise");
+    }
+
     @GetMapping("/enterprise/form")
-    public String enterprisesForm(){
+    public String enterprisesForm(Model model){
+        model.addAttribute("enterprise",new Enterprise());
         return "enterprisesForm";
     }
 
