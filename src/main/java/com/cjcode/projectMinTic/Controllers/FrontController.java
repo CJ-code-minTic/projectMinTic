@@ -2,8 +2,10 @@ package com.cjcode.projectMinTic.Controllers;
 
 import com.cjcode.projectMinTic.Entities.Employee;
 import com.cjcode.projectMinTic.Entities.Enterprise;
+import com.cjcode.projectMinTic.Entities.Transaction;
 import com.cjcode.projectMinTic.Services.EmployeeService;
 import com.cjcode.projectMinTic.Services.EnterpriseService;
+import com.cjcode.projectMinTic.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ public class FrontController {
     @Autowired
     private FrontService service;
     @Autowired
+    TransactionService transactionService;
+    @Autowired
     private EnterpriseService enterpriseService;
     @Autowired
     private EmployeeService employeeService;
@@ -38,7 +42,6 @@ public class FrontController {
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal OidcUser principal, HttpSession session) {
         if(principal != null){
-
             return service.validateUser(principal.getEmail(),session);
         }
         return "index";
@@ -65,12 +68,19 @@ public class FrontController {
     }
 
     @GetMapping("/transaction")
-    public String transactions(){
+    public String transactions(Model model){
+        List<Transaction> transaction = transactionService.getAllTransactionsMVC();
+        model.addAttribute("transaction", transaction);
         return "transactions";
     }
 
     @GetMapping("/transaction/form")
-    public String transactionsForm(){
+    public String transactionsForm(Model model){
+        List<Employee> users = employeeService.getAllUsersMVC();
+        List<Enterprise> enterprises = enterpriseService.getAllEnterpriseMVC();
+        model.addAttribute("users", users);
+        model.addAttribute("enterprises", enterprises);
+        model.addAttribute("transaction", new Transaction());
         return "transactionsForm";
     }
 

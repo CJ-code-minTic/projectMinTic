@@ -40,9 +40,14 @@
                 </div>
             </section>
             <section>
+                <div class="container">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="p-2">
+                            <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/transaction/form">Registrar nueva transaccion</a>
+                        </div>
+                    </div>
+                </div>
                 <br>
-                <br>
-                <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/transaction/form">Resgistar nueva transaccion</a>
                 <br>
             </section>
             <section>
@@ -58,23 +63,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
+                        <tr th:each="transaction : ${transaction}">
+                            <td th:text="${transaction.id}"></td>
+                            <td th:text="${transaction.concept}"></td>
+                            <td th:text="${transaction.amount}"></td>
+
+                            <td>
+                                <a href="/transaction/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
+                                <a href="/transaction/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

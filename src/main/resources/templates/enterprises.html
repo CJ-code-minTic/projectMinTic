@@ -65,6 +65,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th scope="col">Id</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Documento</th>
                             <th scope="col">Telefono</th>
@@ -74,6 +75,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="enterprise : ${enterprises}">
+                            <td th:text="${enterprise.id}"></td>
                             <td th:text="${enterprise.name}"></td>
                             <td th:text="${enterprise.document}"></td>
                             <td th:text="${enterprise.phone}"></td>

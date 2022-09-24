@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://https://www.thymeleaf.org">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -18,7 +18,9 @@
   <!-- Ionic icons -->
   <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
-  <title>Transacciones</title>
+  <script type="text/javascript" src="/js/transaction.js"></script>
+
+  <title>Transacciones form</title>
 </head>
 <body>
 <div class="d-flex" id="content-wrapper">
@@ -34,18 +36,58 @@
               <br>
               <br>
               <h1 class="font-weight-bold mb-0">Registrar nueva transaccion</h1>
-              <form><br>
-                <div class="form-group col-lg-6" >
-                  <input type="int" class="form-control" id="inputdId" placeholder="Id">
-                  <input type="text" class="form-control" id="inputDescripcion" placeholder="Descripcion">
-                  <input type="text" class="form-control" id="inputMonto" placeholder="Monto">
-                  <input type="text" class="form-control" id="inputUsuario" placeholder="Usuario">
-                  <input type="text" class="form-control" id="inputEmpresa" placeholder="Empresa">
-                  <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-              </form>
             </div>
           </div>
+        </div>
+      </section>
+      <section>
+        <div class="container">
+          <br>
+          <br>
+          <form>
+            <div class="form-group row">
+              <label for="concept" class="col-sm-2 col-form-label">Descripcion</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="concept" placeholder="Descripcion">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="mount" class="col-sm-2 col-form-label">Monto</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="mount" placeholder="Monto">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="user" class="col-sm-2 col-form-label">Usuario</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="user">
+                  <option value="">Selecciones el usuario</option>
+                  <option th:each="user:${users}" th:text="${user.name}" th:value="${user.id}">
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="enterprise" class="col-sm-2 col-form-label">Empresa</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="enterprise">
+                  <option value="">Selecciones la empresa</option>
+                  <option th:each="enterprise:${enterprises}" th:text="${enterprise.name}" th:value="${enterprise.id}">
+                  </option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="form-group row">
+              <div class="col-sm-6 mx-auto">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-secondary" th:onclick="cleanForm()">Limpiar</button>
+                <a href="/transaction" class="btn btn-danger">Cancelar</a>
+              </div>
+            </div>
+          </form>
         </div>
       </section>
     </div>
