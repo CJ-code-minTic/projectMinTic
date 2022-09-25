@@ -23,6 +23,59 @@ public class EnterpriseServiceImpl implements EnterpriseService{
     private UtilsService utilsService;
 
     @Override
+    public List<Enterprise> getAllEnterpriseMVC() {
+
+        return repository.findAll();
+    }
+
+    @Override
+    public Enterprise getEnterpriseByIdMVC(Long id) {
+        return repository.findById(id).get();
+    }
+
+    @Override
+    public Enterprise createEnterpriseMVC(Enterprise enterprise) {
+        Enterprise enterpriseDb = repository.findByName(enterprise.getName());
+        if(enterpriseDb == null){
+            var enterpriseDb2 = repository.findByDocument(enterprise.getDocument());
+            if(enterpriseDb2 == null){
+                enterprise.setCreateAt(new Date());
+                return repository.save(enterprise);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
+    public Enterprise updateEnterpriseMVC(Enterprise enterprise, Long id) {
+        Optional<Enterprise> enterpriseDb = repository.findById(id);
+        Enterprise enterpriseName = repository.findByName(enterprise.getName());
+        if(enterpriseName == null || enterpriseName.getId() == id)
+        {
+            Enterprise enterpriseDocument = repository.findByDocument(enterprise.getDocument());
+            if(enterpriseDocument == null || enterpriseDocument.getId() == id){
+                Enterprise enterpriseSave = (Enterprise) utilsService.validateData(enterpriseDb.get(),enterprise);
+                enterpriseSave.setUpdateAt(new Date());
+                return repository.save(enterpriseSave);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean deleteEnterpriseMVC(Long id) {
+        try{
+            repository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
     public ResponseEntity<?> getAllEnterprises() {
         List<Enterprise> enterpriseList = repository.findAll();
         if(enterpriseList.isEmpty()){

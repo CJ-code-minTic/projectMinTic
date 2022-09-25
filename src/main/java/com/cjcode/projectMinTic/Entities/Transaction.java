@@ -9,7 +9,8 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "transaction")
 public class Transaction {
@@ -33,6 +34,9 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
+
+    @Column(name = "date_transaction")
+    private Date date;
 
     @Column(name = "createAt")
     private Date createAt;

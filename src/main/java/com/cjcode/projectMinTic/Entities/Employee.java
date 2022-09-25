@@ -1,18 +1,15 @@
 package com.cjcode.projectMinTic.Entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -30,12 +27,10 @@ public class Employee {
     @Column(name = "role")
     private Role role;
 
-    @JsonBackReference("enterprise-user")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
-    @JsonManagedReference("employee")
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transaction;
 

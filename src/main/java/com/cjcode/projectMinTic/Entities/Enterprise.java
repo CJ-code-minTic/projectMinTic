@@ -1,6 +1,5 @@
 package com.cjcode.projectMinTic.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +9,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "enterprise")
 public class Enterprise {
@@ -31,11 +31,9 @@ public class Enterprise {
     @Column(name = "address")
     private String address;
 
-    @JsonManagedReference("enterprise-user")
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> users;
 
-    @JsonManagedReference("enterprise")
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 

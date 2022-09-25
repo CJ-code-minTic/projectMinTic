@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     private EmployeeRepository employeeRepository;
     @Autowired
     private UtilsService utilsService;
+
+
+    @Override
+    public List<Employee> getAllUsersMVC() {
+        return employeeRepository.findAll();
+    }
 
     @Override
     public ResponseEntity<?> getAllUsers() {
@@ -66,11 +73,18 @@ public class EmployeeServiceImpl implements EmployeeService{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no Encontrado");
         }
         Employee employeeEmail = employeeRepository.findByEmail(employee.getEmail());
-        if(employeeEmail == null){
+        if(employeeEmail == null || employeeEmail.getId()==id){
             Employee employeeSave = (Employee) utilsService.validateData(employeeDb.get(),employee);
             employeeSave.setUpdateAt(new Date());
             return ResponseEntity.ok(employeeRepository.save(employeeSave));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email ya registrado");
     }
+
+    /*@Override
+    public Employee updateUser(Long id, Employee employee){
+        Employee employeeDb = employeeRepository.findById(id);
+    }*/
+
+
 }
