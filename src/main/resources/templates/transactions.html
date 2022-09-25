@@ -40,7 +40,7 @@
                 </div>
             </section>
             <section>
-                <div class="container">
+                <div class="container" th:if="${session.admin}">
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
                             <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/transaction/form">Registrar nueva transaccion</a>
@@ -60,6 +60,7 @@
                             <th scope="col">Monto</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Empresa</th>
+                            <th th:if="${session.admin}" scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -68,7 +69,7 @@
                             <td th:text="${transaction.concept}"></td>
                             <td th:text="${transaction.amount}"></td>
 
-                            <td>
+                            <td th:if="${session.admin}">
                                 <a href="/transaction/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
                                 <a href="/transaction/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
                             </td>

@@ -112,4 +112,32 @@ public class FrontController {
         return "unauthorized";
     }
 
+    @GetMapping("/enterprise/edit/{id}")
+    public String enterpriseEdit(@PathVariable("id") Long id, Model model){
+        Enterprise enterprise = enterpriseService.getEnterpriseByIdMVC(id);
+        model.addAttribute("enterprise",enterprise);
+        return "enterprisesEdit";
+    }
+
+    @PostMapping("/enterprise/edit/{id}")
+    public RedirectView editEnterprise(@PathVariable("id") Long id,@ModelAttribute Enterprise enterprise,
+                                       Model model,RedirectAttributes redirectAttributes){
+        model.addAttribute(enterprise);
+        Enterprise enterpriseSave = enterpriseService.updateEnterpriseMVC(enterprise,id);
+        if(enterpriseSave == null){
+            redirectAttributes.addFlashAttribute("error","Error al Modificar. Ya Existe una Empresa con los datos registrados");
+            return new RedirectView("/enterprise/edit/"+id);
+        }
+        redirectAttributes.addFlashAttribute("success","Empresa Modificada correctamente");
+        return new RedirectView("/enterprise");
+    }
+
+    @DeleteMapping("/enterprise/{id}")
+    public RedirectView deleteEnterprise(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+        if(!enterpriseService.deleteEnterpriseMVC(id)){
+            redirectAttributes.addFlashAttribute("error","Hubo un error al Eliminar la Empresa, contacte con soporte");
+        }
+        redirectAttributes.addFlashAttribute("success","Empresa Eliminada Correctamente");
+        return new RedirectView("/enterprise");
+    }
 }

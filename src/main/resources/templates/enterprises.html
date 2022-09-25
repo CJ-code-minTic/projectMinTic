@@ -40,7 +40,7 @@
                 </div>
             </section>
             <section>
-                <div class="container">
+                <div th:if="${session.admin}" class="container">
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
                             <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/enterprise/form">Crear nueva empresa</a>
@@ -57,28 +57,34 @@
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
                 </div>
+                <div class="alert alert-danger alert-dismissible" th:if="${error != null}" >
+                    <label th:text="${error}"></label>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
                 <div class="container">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Id</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Documento</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Direccion</th>
-                            <th scope="col"></th>
+                            <th scope="col" th:if="${session.admin}"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="enterprise : ${enterprises}">
-                            <td th:text="${enterprise.id}"></td>
                             <td th:text="${enterprise.name}"></td>
                             <td th:text="${enterprise.document}"></td>
                             <td th:text="${enterprise.phone}"></td>
                             <td th:text="${enterprise.address}"></td>
-                            <td>
-                                <a href="/enterprise/update" class=""><i class="icon ion-md-create lead mr-2"></i></a>
-                                <a href="/enterprise/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
+                            <td th:if="${session.admin}">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button th:href="@{/enterprise/edit/{id}(id=${enterprise.id})}" class="btn btn-primary">Editar</button>
+                                    <form th:action="@{/enterprise/{id}(id=${enterprise.id})}" th:method="delete">
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
