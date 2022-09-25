@@ -15,10 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -113,5 +110,34 @@ public class FrontController {
     @GetMapping("/unauthorized")
     public String unauthorized(){
         return "unauthorized";
+    }
+
+    @GetMapping("/enterprise/edit/{id}")
+    public String enterpriseEdit(@PathVariable("id") Long id, Model model){
+        Enterprise enterprise = enterpriseService.getEnterpriseByIdMVC(id);
+        model.addAttribute("enterprise",enterprise);
+        return "enterprisesEdit";
+    }
+
+    @PostMapping("/enterprise/edit/{id}")
+    public RedirectView editEnterprise(@PathVariable("id") Long id,@ModelAttribute Enterprise enterprise,
+                                       Model model,RedirectAttributes redirectAttributes){
+        model.addAttribute(enterprise);
+        Enterprise enterpriseSave = enterpriseService.updateEnterpriseMVC(enterprise,id);
+        if(enterpriseSave == null){
+            redirectAttributes.addFlashAttribute("error","Error al Modificar. Ya Existe una Empresa con los datos registrados");
+            return new RedirectView("/enterprise/edit/"+id);
+        }
+        redirectAttributes.addFlashAttribute("success","Empresa Modificada correctamente");
+        return new RedirectView("/enterprise");
+    }
+
+    @DeleteMapping("/enterprise/{id}")
+    public RedirectView deleteEnterprise(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+        if(!enterpriseService.deleteEnterpriseMVC(id)){
+            redirectAttributes.addFlashAttribute("error","Hubo un error al Eliminar la Empresa, contacte con soporte");
+        }
+        redirectAttributes.addFlashAttribute("success","Empresa Eliminada Correctamente");
+        return new RedirectView("/enterprise");
     }
 }

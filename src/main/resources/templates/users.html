@@ -40,7 +40,7 @@
                 </div>
             </section>
             <section>
-                <div class="container">
+                <div class="container" th:if="${session.admin}">
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
                             <a class="btn btn-outline-dark text-muted" style="text-align:center;" href="/user/form">Crear nuevo usuario</a>
@@ -61,7 +61,7 @@
                             <th scope="col">Rol</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Empresa</th>
-                            <th scope="col"></th>
+                            <th scope="col" th:if="${session.admin}"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -72,7 +72,7 @@
                             <td th:text="${user.role}"></td>
                             <td th:text="${user.phone}"></td>
                             <td th:text="${user.enterprise.name}"></td>
-                            <td>
+                            <td th:if="${session.admin}">
                                 <a href="/user/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
                                 <a href="/user/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
                             </td>

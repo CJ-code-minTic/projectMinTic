@@ -20,6 +20,13 @@ public class FrontServiceImpl implements FrontService{
             return "unauthorized";
         }
         session.setAttribute("name",employee.getName());
+        if(employee.getRole().toString().equals("Admin")){
+            session.setAttribute("admin",true);
+        }
+        else {
+            session.setAttribute("admin",false);
+        }
+        session.setAttribute("id",employee.getId());
         return "index";
     }
 }
