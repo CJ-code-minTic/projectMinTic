@@ -37,13 +37,17 @@
                         <div class="col-lg-9 col-md-8">
                             <br>
                             <br>
-                            <h1 class="font-weight-bold mb-0">Crear nueva empresa</h1>
+                            <h1 class="font-weight-bold mb-0">Editar empresa</h1>
                         </div>
                     </div>
                 </div>
             </section>
             <section>
                 <div class="container">
+                    <div class="alert alert-success alert-dismissible" th:if="${success != null}" >
+                        <label th:text="${success}"></label>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
                     <div class="alert alert-danger alert-dismissible" th:if="${error != null}" >
                         <label th:text="${error}"></label>
                         <button type="button" class="close" data-dismiss="alert">&times;</button>

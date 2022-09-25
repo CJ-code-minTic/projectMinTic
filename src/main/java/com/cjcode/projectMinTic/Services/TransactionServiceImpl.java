@@ -25,8 +25,17 @@ public class TransactionServiceImpl implements TransactionService{
     private UtilsService utilsService;
 
     @Override
-    public List<Transaction> getAllTransactionsMVC() {
-        return transactionRepository.findAll();
+    public List<Transaction> getAllTransactionsMVC(Long id) {
+        List<Transaction> transactions = transactionRepository.findByEnterpriseId(id);
+        if(transactions.isEmpty()){
+            return  null;
+        }
+        return transactions;
+    }
+
+    @Override
+    public Transaction getTransactionById(Long id) {
+        return transactionRepository.findById(id).get();
     }
 
     @Override

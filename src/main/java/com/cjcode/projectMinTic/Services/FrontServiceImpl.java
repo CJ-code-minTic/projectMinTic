@@ -27,6 +27,8 @@ public class FrontServiceImpl implements FrontService{
             session.setAttribute("admin",false);
         }
         session.setAttribute("id",employee.getId());
+        session.setAttribute("enterprise",employee.getEnterprise().getId());
+        session.setAttribute("enterpriseName",employee.getEnterprise().getName());
         return "index";
     }
 }

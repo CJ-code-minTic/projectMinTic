@@ -35,6 +35,9 @@ public class Transaction {
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
+    @Column(name = "date_transaction")
+    private Date date;
+
     @Column(name = "createAt")
     private Date createAt;
 

@@ -7,10 +7,7 @@ import com.cjcode.projectMinTic.Services.EmployeeService;
 import com.cjcode.projectMinTic.Services.EnterpriseService;
 import com.cjcode.projectMinTic.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import com.cjcode.projectMinTic.Services.FrontService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -23,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 public class FrontController {
@@ -65,20 +63,57 @@ public class FrontController {
     }
 
     @GetMapping("/transaction")
-    public String transactions(Model model){
-        List<Transaction> transaction = transactionService.getAllTransactionsMVC();
-        model.addAttribute("transaction", transaction);
+    public String transactions(Model model,HttpSession session){
+        List<Transaction> transactions = transactionService.getAllTransactionsMVC((Long)session.getAttribute("enterprise"));
+        AtomicReference<Float> total = new AtomicReference<>(0f);
+        transactions.forEach(t->{
+            total.set(total.get() + t.getAmount());
+        });
+        model.addAttribute("transaction", transactions);
+        model.addAttribute("total",total);
         return "transactions";
     }
 
     @GetMapping("/transaction/form")
     public String transactionsForm(Model model){
-        List<Employee> users = employeeService.getAllUsersMVC();
-        List<Enterprise> enterprises = enterpriseService.getAllEnterpriseMVC();
-        model.addAttribute("users", users);
-        model.addAttribute("enterprises", enterprises);
         model.addAttribute("transaction", new Transaction());
         return "transactionsForm";
+    }
+
+    @PostMapping("/transaction")
+    public RedirectView createTransaction(@ModelAttribute Transaction transaction,Model model,HttpSession session,
+                                          RedirectAttributes attributes){
+        model.addAttribute(transaction);
+        transaction.setEmployee(Employee.builder().id((Long)session.getAttribute("id")).build());
+        Transaction transactionSave =  (Transaction) transactionService.createTransaction(
+                (Long)session.getAttribute("enterprise"),transaction).getBody();
+        attributes.addFlashAttribute("success","Transaccion creada correctamente");
+        return new RedirectView("/transaction");
+    }
+
+    @GetMapping("/transaction/edit/{id}")
+    public String editTransactionForm(@PathVariable("id") Long id,Model model){
+        Transaction transaction = transactionService.getTransactionById(id);
+        model.addAttribute("transaction",transaction);
+        return "updateTransaction";
+    }
+
+    @PostMapping("/transaction/edit/{id}")
+    public RedirectView editTransaction(@PathVariable("id") Long id,@ModelAttribute Transaction transaction,
+                                        HttpSession session, Model model, RedirectAttributes attributes){
+        model.addAttribute(transaction);
+        transaction.setEmployee(Employee.builder().id((Long)session.getAttribute("id")).build());
+        transactionService.updateTransaction(
+                (Long)session.getAttribute("enterprise"),id,transaction);
+        attributes.addFlashAttribute("success","Transaccion Modificada correctamente");
+        return new RedirectView("/transaction");
+    }
+
+    @DeleteMapping("/transaction/{id}")
+    public RedirectView deleteTransaction(@PathVariable("id")Long id,RedirectAttributes attributes,HttpSession session){
+        transactionService.deleteTransaction((Long)session.getAttribute("enterprise"),id);
+        attributes.addFlashAttribute("success","Transaccion Eliminada correctamente");
+        return new RedirectView("/transaction");
     }
 
     @GetMapping("/enterprise")
