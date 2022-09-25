@@ -140,4 +140,34 @@ public class FrontController {
         redirectAttributes.addFlashAttribute("success","Empresa Eliminada Correctamente");
         return new RedirectView("/enterprise");
     }
+
+    @GetMapping("/user/edit/{id}")
+    public String editUser(@PathVariable("id") Long id, Model model){
+        Employee employee = (Employee) employeeService.getUserById(id).getBody();
+        List<Enterprise> enterpriseList = enterpriseService.getAllEnterpriseMVC();
+        model.addAttribute("enterprises",enterpriseList);
+        model.addAttribute("user",employee);
+        return "updateUsers";
+    }
+
+    @PostMapping("/user/edit/{id}")
+    public RedirectView editUser(@PathVariable("id") Long id, Model model, @ModelAttribute Employee employee,
+                                 RedirectAttributes redirectAttributes){
+        model.addAttribute(employee);
+        try{
+            Employee employeeSave = (Employee) employeeService.updateUser(id, employee).getBody();
+            redirectAttributes.addFlashAttribute("success", "usuario editado correctamente");
+            return new RedirectView("/user");
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("error", "error al editar. Ya existe un usuario con el correo electronico digitado");
+            return new RedirectView("/user/edit/"+id);
+        }
+    }
+
+    @DeleteMapping("/user/{id}")
+    public RedirectView deleteUser(@PathVariable("id") Long id, RedirectAttributes attributes){
+        employeeService.deleteUser(id);
+        attributes.addFlashAttribute("success", "usuario eliminado correctamente");
+        return new RedirectView("/user");
+    }
 }

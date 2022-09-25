@@ -52,6 +52,12 @@
             </section>
             <section>
                 <div class="container">
+                    <div class="alert alert-success alert-dismissible" th:if="${success != null}" >
+                        <label th:text="${success}"></label>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                </div>
+                <div class="container">
                     <table class="table">
                         <thead>
                         <tr>
@@ -73,8 +79,12 @@
                             <td th:text="${user.phone}"></td>
                             <td th:text="${user.enterprise.name}"></td>
                             <td th:if="${session.admin}">
-                                <a href="/user/form" class=""><i class="icon ion-md-create lead mr-2"></i></a>
-                                <a href="/user/form" class=""><i class="icon ion-md-trash lead mr-2"></i></a>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-primary">Editar</a>
+                                    <form th:action="@{/user/{id}(id=${user.id})}" th:method="delete">
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
