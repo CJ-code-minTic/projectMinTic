@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no Encontrado");
         }
         Employee employeeEmail = employeeRepository.findByEmail(employee.getEmail());
-        if(employeeEmail == null){
+        if(employeeEmail == null || employeeEmail.getId()==id){
             Employee employeeSave = (Employee) utilsService.validateData(employeeDb.get(),employee);
             employeeSave.setUpdateAt(new Date());
             return ResponseEntity.ok(employeeRepository.save(employeeSave));
